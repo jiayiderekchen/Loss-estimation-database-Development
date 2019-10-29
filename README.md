@@ -1,1 +1,1 @@
-# Loss-estimation-of-General-Liability-Severity-Trend-Database-Development
+# Loss estimation of General Liability Severity Trend Database Development
