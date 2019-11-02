@@ -1,4 +1,4 @@
-# Loss estimation of General Liability Severity Trend Database Development
+# Loss estimation Database Development and Optimization 
 This is a end-to-end production level codes regarding the construction and development of P&C database, as well as work with data objects, 
 run SQL queries, design functions, etc. 
 
