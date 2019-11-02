@@ -1,1 +1,138 @@
 
+-- Construct Database using mysql
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`General_liability`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`General_liability` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `comp` VARCHAR(4) NULL,
+  `reptype` VARCHAR(4) NULL,
+  `acc_date` VARCHAR(3) NULL,
+  `amt1` INT NULL,
+  `amt2` INT NULL,
+  `amt3` INT NULL,
+  `amt4` INT NULL,
+  `amt5` INT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`comp`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`comp` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `comp` VARCHAR(4) NOT NULL,
+  `comp_desc` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `comp_UNIQUE` (`comp` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`reptype`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`reptype` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `reptype` VARCHAR(4) NOT NULL,
+  `reptype_desc` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `reptype_UNIQUE` (`reptype` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`acc_date`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`acc_date` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `acc_date` VARCHAR(3) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `acc_date_UNIQUE` (`acc_date` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`comp_General_liability`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`comp_General_liability` (
+  `comp_id` INT NOT NULL,
+  `General_liability_id` INT NOT NULL,
+  PRIMARY KEY (`comp_id`, `General_liability_id`),
+  INDEX `fk_comp_has_General_liability_General_liability1_idx` (`General_liability_id` ASC) VISIBLE,
+  INDEX `fk_comp_has_General_liability_comp_idx` (`comp_id` ASC) VISIBLE,
+  CONSTRAINT `fk_comp_has_General_liability_comp`
+    FOREIGN KEY (`comp_id`)
+    REFERENCES `mydb`.`comp` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_comp_has_General_liability_General_liability1`
+    FOREIGN KEY (`General_liability_id`)
+    REFERENCES `mydb`.`General_liability` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`reptype_General_liability`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`reptype_General_liability` (
+  `reptype_id` INT NOT NULL,
+  `General_liability_id` INT NOT NULL,
+  PRIMARY KEY (`reptype_id`, `General_liability_id`),
+  INDEX `fk_reptype_has_General_liability_General_liability1_idx` (`General_liability_id` ASC) VISIBLE,
+  INDEX `fk_reptype_has_General_liability_reptype1_idx` (`reptype_id` ASC) VISIBLE,
+  CONSTRAINT `fk_reptype_has_General_liability_reptype1`
+    FOREIGN KEY (`reptype_id`)
+    REFERENCES `mydb`.`reptype` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_reptype_has_General_liability_General_liability1`
+    FOREIGN KEY (`General_liability_id`)
+    REFERENCES `mydb`.`General_liability` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`acc_date_General_liability`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`acc_date_General_liability` (
+  `acc_date_id` INT NOT NULL,
+  `General_liability_id` INT NOT NULL,
+  PRIMARY KEY (`acc_date_id`, `General_liability_id`),
+  INDEX `fk_acc_date_has_General_liability_General_liability1_idx` (`General_liability_id` ASC) VISIBLE,
+  INDEX `fk_acc_date_has_General_liability_acc_date1_idx` (`acc_date_id` ASC) VISIBLE,
+  CONSTRAINT `fk_acc_date_has_General_liability_acc_date1`
+    FOREIGN KEY (`acc_date_id`)
+    REFERENCES `mydb`.`acc_date` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_acc_date_has_General_liability_General_liability1`
+    FOREIGN KEY (`General_liability_id`)
+    REFERENCES `mydb`.`General_liability` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
