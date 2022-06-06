@@ -1,4 +1,7 @@
 # Loss estimation Database Development and Optimization 
+
+* Disclaimer: none of the data or models used in this repository are related to any physical entities. It’s just a showcase of my personal work.
+
 This is a end-to-end production level project regarding the construction and development of P&C database, as well as work with data objects, run SQL queries, design functions, etc. 
 
 In this project, I completed three major goals: 
